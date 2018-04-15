@@ -38,6 +38,6 @@ defmodule EctoDot.Association do
       end
 
     attrs = ~s([label="#{label}", dir="both", arrowhead="none", arrowtail="#{arrow_tail}"])
-    ~s(#{indent}#{from} -> #{to} #{attrs})
+    ~s(#{indent}"#{from}" -> "#{to}" #{attrs})
   end
 end

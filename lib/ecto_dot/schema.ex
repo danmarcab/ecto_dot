@@ -22,6 +22,6 @@ defmodule EctoDot.Schema do
       |> Enum.map(&Field.to_dot/1)
       |> Enum.map(fn field -> field <> "\\l" end)
 
-    ~s(#{indent}#{schema.name} [shape="record", label="{#{schema.name}|#{fields}}"])
+    ~s(#{indent}"#{schema.name}" [shape="record", label="{#{schema.name}|#{fields}}"])
   end
 end

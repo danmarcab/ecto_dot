@@ -1,6 +1,6 @@
 # EctoDot
 
-Create .dot diagrams from your ecto schemas.
+Create .dot diagrams from your ecto schemas. Export them to `png`, `svg` or `pdf`.
 
 The project it's on a very early stage, so you can expect edge cases and bugs.
 

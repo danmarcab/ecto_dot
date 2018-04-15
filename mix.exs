@@ -8,7 +8,11 @@ defmodule EctoDot.MixProject do
       elixir: "~> 1.6",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      description: description(),
+      package: package(),
+      deps: deps(),
+      name: "EctoDot",
+      source_url: "https://github.com/danmarcab/ecto_dot"
     ]
   end
 
@@ -28,6 +32,18 @@ defmodule EctoDot.MixProject do
     [
       {:ecto, "~> 2.1"},
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false}
+    ]
+  end
+
+  defp description() do
+    "Create .dot diagrams from your ecto schemas. Export them to `png`, `svg` or `pdf`."
+  end
+
+  defp package() do
+    [
+      maintainers: ["Daniel Marín Cabillas"],
+      licenses: ["MIT"],
+      links: %{"GitHub" => "https://github.com/danmarcab/ecto_dot"}
     ]
   end
 end

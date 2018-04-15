@@ -1,0 +1,10 @@
+digraph "Diagram" {
+  Comment [shape="record", label="{Comment|id: id\ltitle: string\lbody: string\lauthor_id: id\lpost_id: id\l}"]
+  Post [shape="record", label="{Post|id: id\ltitle: string\lbody: string\lauthor_id: id\l}"]
+  User [shape="record", label="{User|id: id\lfirst_name: string\lsurname: string\lemail: string\l}"]
+
+  Post -> Comment [label="comments", dir="both", arrowhead="none", arrowtail="odiamond"]
+  Post -> Post [label="related", dir="both", arrowhead="none", arrowtail="odiamond"]
+  User -> Post [label="posts", dir="both", arrowhead="none", arrowtail="odiamond"]
+  User -> Comment [label="comments", dir="both", arrowhead="none", arrowtail="odiamond"]
+}

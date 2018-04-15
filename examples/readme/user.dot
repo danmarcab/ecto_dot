@@ -1,0 +1,3 @@
+digraph "Diagram" {
+  User [shape="record", label="{User|id: id\lfirst_name: string\lsurname: string\lemail: string\l}"]
+}

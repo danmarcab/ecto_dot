@@ -5,7 +5,7 @@ defmodule EctoDot.SchemaTest do
 
   test "end to end" do
     expected =
-      ~s(User [shape="record", label="{User|id: id\\lfirst_name: string\\lsurname: string\\lemail: string\\l}"])
+      ~s("User" [shape="record", label="{User|id: id\\lfirst_name: string\\lsurname: string\\lemail: string\\l}"])
 
     assert Schema.from_ecto(User) |> Schema.to_dot() == expected
   end

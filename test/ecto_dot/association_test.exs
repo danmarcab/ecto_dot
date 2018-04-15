@@ -6,8 +6,8 @@ defmodule EctoDot.AssociationTest do
   describe "end to end" do
     test "for user" do
       expected = [
-        "User -> Post [label=\"posts\", dir=\"both\", arrowhead=\"none\", arrowtail=\"odiamond\"]",
-        "User -> Comment [label=\"comments\", dir=\"both\", arrowhead=\"none\", arrowtail=\"odiamond\"]"
+        "\"User\" -> \"Post\" [label=\"posts\", dir=\"both\", arrowhead=\"none\", arrowtail=\"odiamond\"]",
+        "\"User\" -> \"Comment\" [label=\"comments\", dir=\"both\", arrowhead=\"none\", arrowtail=\"odiamond\"]"
       ]
 
       assert Association.from_ecto(User) |> Enum.map(&Association.to_dot/1) == expected
@@ -15,8 +15,8 @@ defmodule EctoDot.AssociationTest do
 
     test "for post" do
       expected = [
-        "Post -> Comment [label=\"comments\", dir=\"both\", arrowhead=\"none\", arrowtail=\"odiamond\"]",
-        "Post -> Post [label=\"related\", dir=\"both\", arrowhead=\"none\", arrowtail=\"odiamond\"]"
+        "\"Post\" -> \"Comment\" [label=\"comments\", dir=\"both\", arrowhead=\"none\", arrowtail=\"odiamond\"]",
+        "\"Post\" -> \"Post\" [label=\"related\", dir=\"both\", arrowhead=\"none\", arrowtail=\"odiamond\"]"
       ]
 
       assert Association.from_ecto(Post) |> Enum.map(&Association.to_dot/1) == expected

@@ -3,6 +3,7 @@ defmodule EctoDot.Association do
   defstruct [:name, :from, :to, :cardinality]
 
   def from_ecto(mod) do
+
     mod.__schema__(:associations)
     |> Enum.map(fn assoc ->
       mod.__schema__(:association, assoc)
@@ -16,6 +17,29 @@ defmodule EctoDot.Association do
             to: assoc.related,
             cardinality: assoc.cardinality
           }
+        ]
+
+      %Ecto.Association.ManyToMany{cardinality: :many} = assoc ->
+        [
+          %__MODULE__{
+            name: assoc.field,
+            from: mod,
+            to: assoc.related,
+            cardinality: assoc.cardinality
+          },
+          # TODO: maybe map the join table?  
+          # %__MODULE__{
+          #   name: assoc.join_through,
+          #   from: assoc.join_through,
+          #   to: assoc.related,
+          #   cardinality: assoc.cardinality
+          # },
+          # %__MODULE__{
+          #   name: assoc.field,
+          #   from: mod,
+          #   to: assoc.related,
+          #   cardinality: assoc.cardinality
+          # }
         ]
 
       _ ->

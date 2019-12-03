@@ -30,7 +30,7 @@ defmodule EctoDot.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ecto, "~> 2.1"},
+      {:ecto, "~> 3.2"},
       {:mix_test_watch, "~> 0.5", only: :dev, runtime: false}
     ]
   end

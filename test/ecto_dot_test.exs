@@ -65,5 +65,66 @@ defmodule EctoDotTest do
                %Association{name: :related, from: Post, to: Post, cardinality: :many}
              ]
     end
+
+    test "one module with an embedded schema" do
+      diag = EctoDot.diagram(EmbeddedUser)
+
+      assert diag.name == "Diagram"
+      assert diag.schemas == [Schema.from_ecto(EmbeddedUser)]
+      assert diag.associations == []
+    end
+
+    test "one module with an embedded schema and self associations" do
+      diag = EctoDot.diagram(EmbeddedPost)
+
+      assert diag.name == "Diagram"
+      assert diag.schemas == [Schema.from_ecto(EmbeddedPost)]
+
+      assert diag.associations == [
+               %Association{name: :related, from: EmbeddedPost, to: EmbeddedPost, cardinality: :many}
+             ]
+    end
+
+    test "many modules with embedded schemas and no self associations" do
+      diag = EctoDot.diagram([EmbeddedUser, EmbeddedComment])
+
+      assert diag.name == "Diagram"
+      assert diag.schemas == [Schema.from_ecto(EmbeddedUser), Schema.from_ecto(EmbeddedComment)]
+
+      assert diag.associations == [
+               %Association{name: :comments, from: EmbeddedUser, to: EmbeddedComment, cardinality: :many}
+             ]
+    end
+
+    test "many modules with embedded schemas and self associations" do
+      diag = EctoDot.diagram([EmbeddedUser, EmbeddedPost])
+
+      assert diag.name == "Diagram"
+      assert diag.schemas == [Schema.from_ecto(EmbeddedUser), Schema.from_ecto(EmbeddedPost)]
+
+      assert diag.associations == [
+               %Association{name: :posts, from: EmbeddedUser, to: EmbeddedPost, cardinality: :many},
+               %Association{name: :related, from: EmbeddedPost, to: EmbeddedPost, cardinality: :many}
+             ]
+    end
+
+    test "all modules with embedded schemas" do
+      diag = EctoDot.diagram([EmbeddedUser, EmbeddedPost, EmbeddedComment])
+
+      assert diag.name == "Diagram"
+
+      assert diag.schemas == [
+               Schema.from_ecto(EmbeddedUser),
+               Schema.from_ecto(EmbeddedPost),
+               Schema.from_ecto(EmbeddedComment)
+             ]
+
+      assert diag.associations == [
+               %Association{name: :posts, from: EmbeddedUser, to: EmbeddedPost, cardinality: :many},
+               %Association{name: :comments, from: EmbeddedUser, to: EmbeddedComment, cardinality: :many},
+               %Association{name: :comments, from: EmbeddedPost, to: EmbeddedComment, cardinality: :many},
+               %Association{name: :related, from: EmbeddedPost, to: EmbeddedPost, cardinality: :many}
+             ]
+    end
   end
 end

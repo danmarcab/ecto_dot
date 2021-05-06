@@ -8,8 +8,12 @@ defmodule EctoDot.Schema do
     fields =
       mod.__schema__(:fields)
       |> Enum.map(fn field ->
-        %Field{name: field, type: mod.__schema__(:type, field)}
+        case mod.__schema__(:type, field) do
+          {:parameterized, _, _} -> nil
+          type -> %Field{name: field, type: type}
+        end
       end)
+      |> Enum.reject(& &1 == nil)
 
     %__MODULE__{mod: mod, name: Macro.to_string(mod), fields: fields}
   end

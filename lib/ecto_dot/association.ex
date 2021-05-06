@@ -3,12 +3,9 @@ defmodule EctoDot.Association do
   defstruct [:name, :from, :to, :cardinality]
 
   def from_ecto(mod) do
-    mod.__schema__(:associations)
-    |> Enum.map(fn assoc ->
-      mod.__schema__(:association, assoc)
-    end)
-    |> Enum.flat_map(fn
-      %Ecto.Association.Has{} = assoc ->
+    associations_and_embeds(mod)
+    |> Enum.flat_map(fn assoc ->
+      if is_struct(assoc, Ecto.Association.Has) || is_struct(assoc, Ecto.Embedded) do
         [
           %__MODULE__{
             name: assoc.field,
@@ -17,10 +14,22 @@ defmodule EctoDot.Association do
             cardinality: assoc.cardinality
           }
         ]
-
-      _ ->
+      else
         []
+      end
     end)
+  end
+
+  defp associations_and_embeds(mod) do
+    associations = 
+      mod.__schema__(:associations)
+      |> Enum.map(& mod.__schema__(:association, &1))
+
+    embeds = 
+      mod.__schema__(:embeds)
+      |> Enum.map(& mod.__schema__(:embed, &1))
+
+    associations ++ embeds
   end
 
   def to_dot(%__MODULE__{} = assoc, opts \\ []) do
